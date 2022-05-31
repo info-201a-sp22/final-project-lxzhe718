@@ -6,7 +6,7 @@ climate_df <- read.csv("https://raw.githubusercontent.com/owid/co2-data/master/o
 # Home page tab
 intro_tab <- tabPanel(
   # Title of tab
-  "Introduce to A5",
+  "Introduce to final project",
   fluidPage(
     includeMarkdown("introduce.md")
   )
