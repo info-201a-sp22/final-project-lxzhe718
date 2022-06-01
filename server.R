@@ -4,7 +4,7 @@ library(dplyr)
 
 heart_df <- read.csv("heart.csv", stringsAsFactors = FALSE)
 heart_df <- na.omit(heart_df)
-heart_df <- heart_df %>% filter
+
 
 have_disease <- heart_df %>% filter(HeartDisease == "Yes")
 no_disease <- heart_df %>% filter(HeartDisease == "No")
@@ -57,6 +57,34 @@ server <- function(input, output) {
            x = input$factor_selection, 
            y = "Percentage")
     return(plot1)
+  })
+  
+  output$age_gender_plot <- renderPlotly({
+    filtered_df <- heart_df %>%
+      filter(Sex == input$gender_selection) %>%
+      filter(AgeCategory %in% input$age_selection) 
+    
+    # Get total amount of people in each age group in order to calculate percentage
+    total_count <- filtered_df %>% group_by(AgeCategory) %>% 
+      summarise(total = n())
+    
+    category_count <- filtered_df %>% 
+      group_by(AgeCategory, HeartDisease) %>% 
+      summarise(count_type = n())
+    
+    plot_data <- category_count %>% 
+      left_join(total_count, by="AgeCategory") %>% 
+      mutate(percentage = count_type / total * 100)
+
+    plot2 <- ggplot(data = plot_data,
+                    aes(x = AgeCategory, 
+                        y = percentage,
+                        color = HeartDisease,
+                        group=1)) +
+      geom_point() + geom_line()
+      labs(title = "How does heart disease relate to age and sex",
+           x = "age category")
+    return(plot2)
   })
   
   
