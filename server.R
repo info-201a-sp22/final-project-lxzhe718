@@ -117,9 +117,8 @@ server <- function(input, output) {
       geom_bar(position="dodge", stat="identity", fill = cols) + 
       labs(title = "How Does Heart Disease Relate to Sleep Hours",
            x = "Sleep Time (hours)")
-    
+
     return(plot3)
-      
   })
 }
 

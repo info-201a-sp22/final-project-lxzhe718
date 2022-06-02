@@ -4,8 +4,11 @@ library(markdown)
 
 heart_df <- read.csv("heart.csv", stringsAsFactors = FALSE)
 
+
 # Update BootSwatch Theme
-my_theme <- bs_theme_update(my_theme, bootswatch = "minty")
+my_theme <- bs_theme_update(my_theme, bootswatch = "sandstone") %>%
+  bs_add_rules(sass::sass_file("my_style.scss"))
+
 
 # Home page tab
 intro_tab <- tabPanel(
@@ -96,6 +99,7 @@ third_tab <- tabPanel(
 ui <- navbarPage(
   # Home page title
   "Final Project",
+  theme = my_theme,
   intro_tab,
   first_tab,
   second_tab,
