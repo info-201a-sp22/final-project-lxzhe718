@@ -2,7 +2,7 @@ library(ggplot2)
 library(plotly)
 library(dplyr)
 
-heart_df <- read.csv("heart.csv", stringsAsFactors = FALSE)
+heart_df <- read.csv("/Users/unaz/Desktop/INFO201/final-project-lxzhe718-1935368/heart.csv", stringsAsFactors = FALSE)
 heart_df <- na.omit(heart_df)
 
 
@@ -82,10 +82,44 @@ server <- function(input, output) {
                         color = HeartDisease,
                         group=1)) +
       geom_point() + geom_line()
-      labs(title = "How does heart disease relate to age and sex",
+      labs(title = "How Does Heart Disease Relate to Age And Sex",
            x = "age category")
     return(plot2)
   })
   
-  
+  output$sleep_hour_plot <- renderPlotly({
+    net_df <- heart_df %>% 
+      select(HeartDisease, SleepTime) %>% 
+      filter(SleepTime >= input$hour_selection[1] & 
+               SleepTime <= input$hour_selection[2]) %>% 
+      group_by(SleepTime)
+    
+    total_count_in_sleep <- net_df %>% 
+      summarise(sleep_total = n())
+    
+    sleep_hour_count <- net_df %>% 
+      filter(HeartDisease == "Yes") %>% 
+      summarise(disease_total = n())
+     
+    sleep_plot_data <- total_count_in_sleep  %>% 
+      left_join(sleep_hour_count, by = "SleepTime")
+    
+    sleep_plot_data[is.na(sleep_plot_data)] = 0
+    
+    sleep_plot_data <- sleep_plot_data %>% 
+      mutate(percentage = round(disease_total / sleep_total * 100, digits = 2))
+    
+    cols <- c("turquoise3","violetred1")[(sleep_plot_data$percentage > 11) + 1]
+    
+    plot3 <- ggplot(data = sleep_plot_data,
+                    aes(x = SleepTime,
+                        y = percentage)) + 
+      geom_bar(position="dodge", stat="identity", fill = cols) + 
+      labs(title = "How Does Heart Disease Relate to Sleep Hours",
+           x = "Sleep Time (hours)")
+    
+    return(plot3)
+      
+  })
 }
+

@@ -1,6 +1,11 @@
 library(plotly)
+library(bslib)
+library(markdown)
 
-heart_df <- read.csv("heart.csv", stringsAsFactors = FALSE)
+heart_df <- read.csv("/Users/unaz/Desktop/INFO201/final-project-lxzhe718-1935368/heart.csv", stringsAsFactors = FALSE)
+
+# Update BootSwatch Theme
+my_theme <- bs_theme_update(my_theme, bootswatch = "minty")
 
 # Home page tab
 intro_tab <- tabPanel(
@@ -58,7 +63,7 @@ second_plot <- mainPanel(
 )
 
 second_tab <- tabPanel(
-  "Heart disease's factors",
+  "Gender & Age",
   sidebarLayout(
     second_widget,
     second_plot
@@ -68,20 +73,24 @@ second_tab <- tabPanel(
 
 
 third_widget <- sidebarPanel(
-
+  sliderInput(inputId ="hour_selection",
+              label = h3("Sleep Hours"), 
+              min = min(heart_df$SleepTime), 
+              max = max(heart_df$SleepTime), 
+              value = c(2, 16))
 )
 
 third_plot <- mainPanel(
-
+  plotlyOutput(outputId = "sleep_hour_plot")
 )
 
 third_tab <- tabPanel(
-  "Heart disease's factors",
+  "Sleep Hours",
   sidebarLayout(
     third_widget,
     third_plot
   ),
-  p("add decription here.")
+  p("The main goal of this chart is to explore the relationship between average sleep hours and the chances of getting heart disease. The percentages presented above were calculated by using the number of people who got heart disease to devide by total number of people in each sleep hour category. Regardless of the abnormal data (more tha 16 hours or less than 2 hours), the graph shows that there are slightly more chances to get heart disease if people sleep more than 9 hours or less than 5 hours.If the abnormal datas are included, the graph shows an unstable trend with the factor of sleep hours. One hypothesis of the phenomenon is that, for people who sleeps more than 20, heart disease might be the causes of drowsiness instead of the result.")
 )
 
 ui <- navbarPage(
@@ -92,3 +101,4 @@ ui <- navbarPage(
   second_tab,
   third_tab
 )
+
