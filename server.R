@@ -112,19 +112,24 @@ server <- function(input, output) {
     
     sleep_plot_data <- sleep_plot_data %>% 
       mutate(percentage = round(disease_total / sleep_total * 100, digits = 2))
+
+    sleep_plot_data <- sleep_plot_data %>% 
+      mutate(risk_level = sleep_plot_data$percentage > 11)
+    sleep_plot_data$risk_level <- replace(sleep_plot_data$risk_level, 
+                                          sleep_plot_data$risk_level == TRUE, 
+                               "High risk (more than 11%)")
     
-    cols <- c("turquoise3","violetred1")[(sleep_plot_data$percentage > 11) + 1]
+    sleep_plot_data$risk_level <- replace(sleep_plot_data$risk_level, 
+                                          sleep_plot_data$risk_level == FALSE, 
+                                          "Low risk (less than 11%)")
     
     plot3 <- ggplot(data = sleep_plot_data,
                     aes(x = SleepTime,
-                        y = percentage)) + 
-      geom_bar(position="dodge", stat="identity", fill = cols) + 
+                        y = percentage, 
+                        fill = risk_level)) + 
+      geom_bar(position="dodge", stat="identity") + 
       labs(title = "How Does Heart Disease Relate to Sleep Hours",
-           x = "Sleep Time (hours)") + 
-      geom_text(aes(label = percentage), 
-                vjust = -1.5,
-                size = 4)
-
+           x = "Sleep Time (hours)")
     return(plot3)
   })
 }

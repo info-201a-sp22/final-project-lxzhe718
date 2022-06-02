@@ -5,14 +5,9 @@ library(bslib)
 library(markdown)
 library(tidyr)
 
-
 heart_df <- read.csv("heart.csv", stringsAsFactors = FALSE)
-my_theme <- bs_theme(bg = "#0b3d91", #background color
-                     fg = "white", #foreground color
-                     primary = "#FCC780", # primary color
-) 
-my_theme <- bs_theme_update(my_theme, bootswatch = "sandstone") %>%
-  bs_add_rules(sass::sass_file("my_style.scss"))
+my_theme <- bs_theme() 
+my_theme <- bs_theme_update(my_theme, bootswatch = "sandstone", font_scale = 1.3, bg = "#f5f6fd", fg = "black") %>% bs_add_rules(sass::sass_file("my_style.scss"))
 
 # Home page tab
 intro_tab <- tabPanel(
@@ -111,9 +106,8 @@ con_tab <- tabPanel(
 
 
 ui <- navbarPage(
-  # Home page title
-  "Final Project",
   theme = my_theme,
+  "Final Project",
   intro_tab,
   first_tab,
   second_tab,

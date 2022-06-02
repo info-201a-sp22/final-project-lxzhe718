@@ -5,9 +5,9 @@ account: lxzhe718
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 6414984
-bundleId: 5970699
+bundleId: 5972592
 url: https://lxzhe718.shinyapps.io/final-project-lxzhe718-1935368_test/
-when: 1654155084.55664
-lastSyncTime: 1654155084.55664
+when: 1654198463.54585
+lastSyncTime: 1654198463.54585
 asMultiple: FALSE
 asStatic: FALSE
