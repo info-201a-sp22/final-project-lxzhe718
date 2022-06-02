@@ -1,14 +1,18 @@
+library(ggplot2)
 library(plotly)
+library(dplyr)
 library(bslib)
 library(markdown)
+library(tidyr)
+
 
 heart_df <- read.csv("heart.csv", stringsAsFactors = FALSE)
-
-
-# Update BootSwatch Theme
+my_theme <- bs_theme(bg = "#0b3d91", #background color
+                     fg = "white", #foreground color
+                     primary = "#FCC780", # primary color
+) 
 my_theme <- bs_theme_update(my_theme, bootswatch = "sandstone") %>%
   bs_add_rules(sass::sass_file("my_style.scss"))
-
 
 # Home page tab
 intro_tab <- tabPanel(

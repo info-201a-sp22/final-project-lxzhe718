@@ -1,6 +1,10 @@
 library(ggplot2)
 library(plotly)
 library(dplyr)
+library(bslib)
+library(markdown)
+library(tidyr)
+
 
 heart_df <- read.csv("heart.csv", stringsAsFactors = FALSE)
 heart_df <- na.omit(heart_df)
