@@ -120,7 +120,10 @@ server <- function(input, output) {
                         y = percentage)) + 
       geom_bar(position="dodge", stat="identity", fill = cols) + 
       labs(title = "How Does Heart Disease Relate to Sleep Hours",
-           x = "Sleep Time (hours)")
+           x = "Sleep Time (hours)") + 
+      geom_text(aes(label = percentage), 
+                vjust = -1.5,
+                size = 4)
 
     return(plot3)
   })
