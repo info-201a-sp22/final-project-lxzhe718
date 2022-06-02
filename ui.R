@@ -2,7 +2,7 @@ library(plotly)
 library(bslib)
 library(markdown)
 
-heart_df <- read.csv("/Users/unaz/Desktop/INFO201/final-project-lxzhe718-1935368/heart.csv", stringsAsFactors = FALSE)
+heart_df <- read.csv("heart.csv", stringsAsFactors = FALSE)
 
 # Update BootSwatch Theme
 my_theme <- bs_theme_update(my_theme, bootswatch = "minty")

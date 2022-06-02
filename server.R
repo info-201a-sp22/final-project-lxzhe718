@@ -2,7 +2,7 @@ library(ggplot2)
 library(plotly)
 library(dplyr)
 
-heart_df <- read.csv("/Users/unaz/Desktop/INFO201/final-project-lxzhe718-1935368/heart.csv", stringsAsFactors = FALSE)
+heart_df <- read.csv("heart.csv", stringsAsFactors = FALSE)
 heart_df <- na.omit(heart_df)
 
 
